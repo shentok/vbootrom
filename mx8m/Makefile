@@ -38,12 +38,12 @@ GIT_VERSION := git-$(shell git rev-parse --short HEAD)
 #
 # Without these flags, function pointers in .data may be NULL or invalid at
 # runtime.
-CFLAGS		= -Os -Wall -Wextra -g -mcpu=cortex-a35 -fno-stack-protector \
+CFLAGS		= -Os -Wall -Wextra -g -mcpu=cortex-a53 -fno-stack-protector \
 		-no-pie -fno-pic \
 		-I ./include -I ../lib/libfdt -I ../lib/libc/minimal/include
 
 CFLAGS		+= -DGIT_VERSION=\"$(GIT_VERSION)\"
-ASFLAGS		= $(CFLAGS) -Wa,-mcpu=cortex-a35
+ASFLAGS		= $(CFLAGS) -Wa,-mcpu=cortex-a53
 LDSCRIPT	= bootrom.ld
 MAPFILE		= bootrom.map
 LDFLAGS		= -Wl,--build-id=none -static -nostdlib -T $(LDSCRIPT) -Wl,-Map=$(MAPFILE)
@@ -57,17 +57,17 @@ OBJS		:= start.o image.o stor.o ast_loader.o fmc_image.o board_ast2700.o \
 		../lib/libfdt/fdt_addresses.o
 
 .PHONY: all clean
-all: ast27x0_bootrom.bin ast27x0_bootrom.asm
+all: imx8m_bootrom.bin imx8m_bootrom.asm
 
 clean:
 	rm -f *.o *.bin *.elf *.asm *.map ../lib/libfdt/*.o \
 	../lib/libc/minimal/source/string/*.o
 
-ast27x0_bootrom.bin: ast27x0_bootrom.elf
+imx8m_bootrom.bin: imx8m_bootrom.elf
 	$(OBJCOPY) -O binary $< $@
 
-ast27x0_bootrom.asm: ast27x0_bootrom.elf
+imx8m_bootrom.asm: imx8m_bootrom.elf
 	$(OBJDUMP) -S $< > $@
 
-ast27x0_bootrom.elf: $(OBJS) $(LDSCRIPT)
+imx8m_bootrom.elf: $(OBJS) $(LDSCRIPT)
 	$(CC) -o $@ $(LDFLAGS) $(OBJS)

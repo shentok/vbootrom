@@ -46,7 +46,7 @@
  * preserved explicitly.
  */
 static struct uart_console ucons = {
-    .uputc = uart_aspeed_poll_out
+    .uputc = uart_imx_poll_out
 };
 
 static const char *splash_screen =
@@ -125,10 +125,18 @@ void *find_and_load_appended_dtb(uint64_t start_addr, uint64_t end_addr)
 
 uint64_t load_boot_image(void)
 {
+    const struct uart_config uart_cfg = {
+        .baudrate = 115200,
+        .parity = UART_CFG_PARITY_NONE,
+        .stop_bits = UART_CFG_STOP_BITS_1,
+        .data_bits = UART_CFG_DATA_BITS_8,
+        .flow_ctrl = UART_CFG_FLOW_CTRL_NONE,
+        .base = 0x30890000, /* UART 2 */
+    };
     int ret = CPTRA_SUCCESS;
     uint64_t jump_addr;
 
-    uart_aspeed_init(UART12);
+    uart_imx_init(&uart_cfg);
     uart_console_register(&ucons);
     print_build_info();
 

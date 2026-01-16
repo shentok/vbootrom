@@ -11,12 +11,10 @@
  * @brief Public APIs for UART drivers
  */
 
-#ifndef __AST27X0_INCLUDE_UART_H__
-#define __AST27X0_INCLUDE_UART_H__
+#ifndef __MX8M_INCLUDE_UART_H__
+#define __MX8M_INCLUDE_UART_H__
 
 #include <stdint.h>
-
-#define UART12  0x14C33B00
 
 /**
  * @brief UART Interface
@@ -80,13 +78,14 @@ struct uart_config {
     uint8_t stop_bits;  /**< Stop bits, use @ref uart_config_stop_bits */
     uint8_t data_bits;  /**< Data bits, use @ref uart_config_data_bits */
     uint8_t flow_ctrl;  /**< Flow control setting, use @ref uart_config_flow_control */
+    uintptr_t base;
 };
 
-void uart_aspeed_poll_out(unsigned char c);
-int uart_aspeed_init(uintptr_t base);
+void uart_imx_poll_out(unsigned char c);
+int uart_imx_init(const struct uart_config *uart_cfg);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __AST27X0_INCLUDE_UART_H__ */
+#endif /* __MX8M_INCLUDE_UART_H__ */

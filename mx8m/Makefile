@@ -50,7 +50,7 @@ LDFLAGS		= -Wl,--build-id=none -static -nostdlib -T $(LDSCRIPT) -Wl,-Map=$(MAPFI
 
 OBJS		:= start.o image.o stor.o ast_loader.o fmc_image.o board_ast2700.o \
 		manifest.o manifest_image.o \
-		uart_aspeed.o uart_console.o ssp_tsp.o \
+		uart_imx.o uart_console.o ssp_tsp.o \
 		../lib/libc/minimal/source/string/string.o \
 		../lib/libfdt/fdt.o ../lib/libfdt/fdt_ro.o \
 		../lib/libfdt/fdt_rw.o ../lib/libfdt/fdt_wip.o \

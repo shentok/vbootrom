@@ -19,8 +19,8 @@
 
 MEMORY
 {
-    rom (rx) : ORIGIN = 0x00000000, LENGTH = 128K
-    ram (arwx) : ORIGIN = 0x10000000, LENGTH = 128K
+    rom (rx) : ORIGIN = 0x00000000, LENGTH = 252K
+    ram (arwx) : ORIGIN = 0x00900000, LENGTH = 576K
 }
 
 SECTIONS

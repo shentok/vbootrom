@@ -173,6 +173,6 @@ b       panic
 .section .rodata
 .type sram_base_addr, %object
 sram_base_addr:
-.dword    0x10000000
+.dword    0x00900000
 .size sram_base_addr, . - sram_base_addr
 

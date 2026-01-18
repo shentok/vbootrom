@@ -1,0 +1,50 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build",
+      "type": "shell",
+      "command": "make -j $(nproc)",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": {
+        "base": "$gcc",
+        "fileLocation": [
+          "relative",
+          "${workspaceFolder}"
+        ]
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Run imx8mp-evk",
+      "type": "shell",
+      "command": "echo 'QEMU RTOSdemo started'; ~/Projects/qemu/build-full/qemu-system-aarch64 -M imx8mp-evk,boot-mode=3 -bios imx8m_bootrom.bin -serial none -serial vc -icount shift=auto -trace memory_region_ops_* -s -S",
+      "dependsOn": [
+        "Build"
+      ],
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": "QEMU RTOSdemo started",
+          }
+        }
+      ]
+    }
+  ]
+}

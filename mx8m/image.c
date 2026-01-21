@@ -19,6 +19,7 @@
 
 #include <string.h>
 #include <libfdt.h>
+#include <esdhc.h>
 #include <uart.h>
 #include <uart_console.h>
 #include <io.h>
@@ -133,12 +134,19 @@ uint64_t load_boot_image(void)
         .flow_ctrl = UART_CFG_FLOW_CTRL_NONE,
         .base = 0x30890000, /* UART 2 */
     };
+    const struct sdhci_config sdhci_cfg = {
+        .base = 0x30b50000,
+    };
+    uint8_t buf[0x1000];
     int ret = CPTRA_SUCCESS;
     uint64_t jump_addr;
 
     uart_imx_init(&uart_cfg);
     uart_console_register(&ucons);
     print_build_info();
+
+    esdhc_init(&sdhci_cfg);
+    esdhc_read_block(buf, sizeof(buf));
 
     /*
      * Step 1: Try to boot using Caliptra Manifest

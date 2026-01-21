@@ -49,7 +49,7 @@ MAPFILE		= bootrom.map
 LDFLAGS		= -Wl,--build-id=none -static -nostdlib -T $(LDSCRIPT) -Wl,-Map=$(MAPFILE)
 
 OBJS		:= start.o image.o stor.o ast_loader.o fmc_image.o board_ast2700.o \
-		manifest.o manifest_image.o \
+		manifest.o manifest_image.o esdhc.o \
 		uart_imx.o uart_console.o ssp_tsp.o \
 		../lib/libc/minimal/source/string/string.o \
 		../lib/libfdt/fdt.o ../lib/libfdt/fdt_ro.o \
